@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Chat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles2.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+</head>
+</head>
+<body>
+    <div class="chat-container">
+        <button class="back-button" onclick="window.location.href='{{ url_for('index') }}';">Назад</button>
+        {% for message in messages %}
+            <div class="message {% if message.status == 'me' %}my-message{% else %}other-message{% endif %}">
+                <div class="message-info">
+                    <span class="sender">{{ message.sender }}</span>
+                    <span class="time">{{ message.time }}</span>
+                </div>
+                <div class="text">{{ message.text }}</div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div id="popup-container" class="popup-container">
+        <div class="popup-content">
+            <span id="popup-text" class="popup-text"></span>
+            <button id="close-popup" class="close-popup">Закрыть</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const messages = document.querySelectorAll('.other-message');
+            messages.forEach(message => {
+                message.addEventListener('click', function() {
+                    const popupContainer = document.getElementById('popup-container');
+                    const popupText = document.getElementById('popup-text');
+                    popupText.textContent = message.querySelector('.text').textContent;
+                    popupContainer.style.display = 'block';
+                });
+            });
+
+            const closePopup = document.getElementById('close-popup');
+            closePopup.addEventListener('click', function() {
+                const popupContainer = document.getElementById('popup-container');
+                popupContainer.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

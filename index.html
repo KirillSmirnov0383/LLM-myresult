@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выбор диалога</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+</head>
+<body>
+    <div class="file-list">
+        <div class="header">Выбор диалога</div>
+        <ul>
+            {% for file in files %}
+                <li><a href="{{ url_for('chat', filename=file) }}">{{ file }}</a></li>
+            {% endfor %}
+        </ul>
+        <button onclick="window.location.reload();">Обновить</button>
+    </div>
+</body>
+</html>
